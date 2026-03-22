@@ -64,7 +64,9 @@ def parse_bindings(path):
 
 
 def resolve_bindings_path(explicit=None):
-    """Resolve bindings.yaml: explicit -> cwd -> sflo/ subdir."""
+    """Resolve bindings.yaml: explicit -> cwd -> sflo/ subdir -> SFLO_ROOT."""
+    from .constants import SFLO_ROOT
+
     if explicit and os.path.isfile(explicit):
         return explicit
     cwd_path = os.path.join(os.getcwd(), "bindings.yaml")
@@ -73,4 +75,8 @@ def resolve_bindings_path(explicit=None):
     sflo_path = os.path.join(os.getcwd(), "sflo", "bindings.yaml")
     if os.path.isfile(sflo_path):
         return sflo_path
+    # Fallback: resolve from scaffold.py's own location
+    root_path = os.path.join(SFLO_ROOT, "bindings.yaml")
+    if os.path.isfile(root_path):
+        return root_path
     return None

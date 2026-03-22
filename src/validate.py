@@ -5,7 +5,7 @@ import os
 import re
 import sys
 
-from .constants import GATES, GRADE_MAP, GRADE_THRESHOLD
+from .constants import GATES, SFLO_ROOT, GRADE_MAP, GRADE_THRESHOLD
 
 
 def read_artifact(sflo_dir, filename):
@@ -40,12 +40,13 @@ def clean_artifacts_from(start_gate, sflo_dir):
 
 
 def validate_agent_path(agent_path):
-    """Ensure agent path doesn't escape the project directory."""
+    """Ensure agent path doesn't escape the project directory or SFLO_ROOT."""
     resolved = os.path.realpath(agent_path)
     cwd = os.path.realpath(os.getcwd())
-    if not resolved.startswith(cwd):
-        return False, f"Agent path '{agent_path}' resolves outside project directory"
-    return True, None
+    sflo_root = os.path.realpath(SFLO_ROOT)
+    if resolved.startswith(cwd) or resolved.startswith(sflo_root):
+        return True, None
+    return False, f"Agent path '{agent_path}' resolves outside project directory"
 
 
 def validate_gate(gate_num, sflo_dir):

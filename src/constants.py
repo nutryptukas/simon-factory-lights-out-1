@@ -1,5 +1,10 @@
 """SFLO pipeline constants — gates, grades, limits, state names."""
 
+import os
+
+# Root of the sflo repo — resolved from this file's location (src/ -> repo root)
+SFLO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 GATES = {
     1: {"artifact": "SCOPE.md", "role": "pm", "gate_doc": "gates/discovery.md"},
     2: {"artifact": "BUILD-STATUS.md", "role": "dev", "gate_doc": "gates/build.md"},

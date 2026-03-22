@@ -4,7 +4,7 @@ import os
 import re
 
 from .constants import (
-    GATES, INNER_LOOP_MAX, OUTER_LOOP_MAX,
+    GATES, SFLO_ROOT, INNER_LOOP_MAX, OUTER_LOOP_MAX,
     S_SCOUT, S_ASSIGN, S_ESCALATE, S_DONE,
 )
 from .state import write_state
@@ -12,11 +12,18 @@ from .validate import validate_gate, clean_artifacts_from
 
 
 def resolve_sflo_base():
-    """Find the sflo/ base directory (for gate docs)."""
+    """Find the sflo/ base directory (for gate docs).
+
+    Checks cwd first (for backward compat), then falls back to
+    SFLO_ROOT (resolved from scaffold.py's location).
+    """
     if os.path.isdir(os.path.join(os.getcwd(), "sflo", "gates")):
         return "sflo"
     if os.path.isdir(os.path.join(os.getcwd(), "gates")):
         return "."
+    # Fallback: resolve from scaffold.py's own location
+    if os.path.isdir(os.path.join(SFLO_ROOT, "gates")):
+        return SFLO_ROOT
     return "sflo"
 
 
