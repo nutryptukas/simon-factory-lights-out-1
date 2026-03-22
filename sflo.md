@@ -1,8 +1,18 @@
 # SFLO — Core Pipeline
 
+## Trigger
+
+When the user says `SFLO: <description>`, run:
+
+```
+python src/runner.py "<description>"
+```
+
+The runner handles everything: Scout assignment, agent spawning with correct models, gate validation, fail loops. No manual scaffold calls needed.
+
 ## Overview
 
-SFLO is a five-gate pipeline for building software with AI agents. The scaffold (`src/scaffold.py`) is the authority — it manages state, validates artifacts, enforces gate sequence, and controls loop limits. No agent can skip, override, or shortcut the pipeline.
+SFLO is a five-gate pipeline for building software with AI agents. The runner (`src/runner.py`) executes the pipeline. The scaffold (`src/scaffold.py`) is the state machine — it manages state, validates artifacts, enforces gate sequence, and controls loop limits. No agent can skip, override, or shortcut the pipeline.
 
 ## Roles
 
@@ -17,7 +27,7 @@ Custom agents can extend any role. Core gate checks are always enforced by the s
 
 | Gate | Artifact | Validated by scaffold |
 |------|----------|----------------------|
-| 1. Discovery | `SCOPE.md` | Data sources section, acceptance criteria, appetite |
+| 1. Discovery | `SCOPE.md` | Data sources section, acceptance criteria |
 | 2. Build | `BUILD-STATUS.md` | Build success marker, all checks marked |
 | 3. Test | `QA-REPORT.md` | Grade present, grade ≥ B+ threshold, auto-fail patterns |
 | 4. Verify | `PM-VERIFY.md` | Verdict present, verdict = APPROVED |

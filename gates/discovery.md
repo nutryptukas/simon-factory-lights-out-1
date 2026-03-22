@@ -29,6 +29,4 @@
 - [ ] SCOPE.md exists
 - [ ] At least 1 data endpoint verified with real curl output
 - [ ] Acceptance criteria are specific and testable
-- [ ] Appetite is defined
-
 The scaffold validates these checks before advancing to Gate 2.

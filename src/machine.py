@@ -165,11 +165,11 @@ def apply_transition(state, result, sflo_dir):
         return result
 
     if action == "validated":
+        state["gates"][str(n)]["status"] = "done"
         if n == 5:
             state["current_state"] = S_DONE
         else:
             state["current_state"] = f"gate-{n + 1}"
-            state["gates"][str(n)]["status"] = "done"
         write_state(sflo_dir, state)
 
         next_action = compute_next(state, sflo_dir)

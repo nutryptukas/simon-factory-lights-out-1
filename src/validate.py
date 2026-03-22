@@ -68,8 +68,6 @@ def validate_gate(gate_num, sflo_dir):
         checks.append({"name": "has_acceptance_criteria", "pass": len(ac_lines) >= 1,
                         "detail": f"{len(ac_lines)} criteria found"})
 
-        has_appetite = bool(re.search(r"##\s*(Appetite|Time Budget)", content, re.IGNORECASE))
-        checks.append({"name": "has_appetite", "pass": has_appetite})
 
     elif gate_num == 2:
         has_success = bool(re.search(r"build[:\s]*success|zero errors", content, re.IGNORECASE))
